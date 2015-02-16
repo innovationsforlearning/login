@@ -1,10 +1,4 @@
-describe('login', function() {
-
-  var subject;
-
-  beforeEach(function() {
-    subject = new Ifl.login();
-  });
+describe('Ifl.login', function() {
 
   describe("setting urls", function() {
     it("sets a production url", function() {
@@ -12,72 +6,78 @@ describe('login', function() {
       expect(Ifl.login.productionApiUrl).to.equal('https://iflauthexample-webapp.herokuapp.com');
     });
 
-    // it("sets a development url", function() {
-    //   login.setDevelopmentUrl();
-    //   expect(login.developmentApiUrl).to.equal('http://localhost:3000');
-    // });
+    it("sets a development url", function() {
+      Ifl.login.setDevelopmentUrl();
+      expect(Ifl.login.developmentApiUrl).to.equal('http://localhost:3000');
+    });
   });
 
-  // describe("cacheElements", function() {
+  describe("cacheElements", function() {
 
-  //   beforeEach(function() {
-  //     login.cacheElements();
-  //   });
+    beforeEach(function() {
+      // appendFixture("input", { id: "autocomplete", type: "text", name: "autocomplete" });
+      appendFixture("div", { id: "loginContainer"});
+      appendFixture("input", { id: "email-field", type: "text", name: "email"});
+      appendFixture("input", { id: "password-field", type: "password", name: "password"});
+      appendFixture("input", { id: "submit", type: "button"});
+      appendFixture("div", { id: "gameContainer"});
+      Ifl.login.cacheElements();
+    });
 
-  //   it("saves a reference to the game container", function() {
-  //     expect(login.$gameContainer).to.exist;
-  //     expect(login.$gameContainer).to.have.id("gameContainer");
-  //   });
+    it("saves a reference to the login container", function() {
+      expect(Ifl.login.$loginContainer).to.exist;
+      expect(Ifl.login.$loginContainer).to.have.id("loginContainer");
+    });
 
-  //   it("saves a reference to the submit button", function() {
-  //     expect(login.$submit).to.exist;
-  //     expect(login.$submit).to.have.id("submit");
-  //   });
+    it("saves a reference to the email field", function() {
+      expect(Ifl.login.$email).to.exist;
+      expect(Ifl.login.$email).to.have.id("email-field");
+    });
 
-  //   it("saves a reference to the email field", function() {
-  //     expect(login.$email).to.exist;
-  //     expect(login.$email).to.have.id("email-field");
-  //   });
+    it("saves a reference to the password field", function() {
+      expect(Ifl.login.$password).to.exist;
+      expect(Ifl.login.$password).to.have.id("password-field");
+    });
 
-  //   it("saves a reference to the password field", function() {
-  //     expect(login.$password).to.exist;
-  //     expect(login.$password).to.have.id("password-field");
-  //   });
+    it("saves a reference to the submit button", function() {
+      expect(Ifl.login.$submit).to.exist;
+      expect(Ifl.login.$submit).to.have.id("submit");
+    });
 
-  //   it("saves a reference to the login container", function() {
-  //     expect(login.$login).to.exist;
-  //     expect(login.$login).to.have.id("login");
-  //   });
-  // });
+    it("saves a reference to the game container", function() {
+      expect(Ifl.login.$gameContainer).to.exist;
+      expect(Ifl.login.$gameContainer).to.have.id("gameContainer");
+    });
+  });
 
   // it("sets the current user", function() { // how do you fake out the response data?
   //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
-  //   login.setCurrentUser(responseData);
-  //   expect(login.currentUser.firstname).to.equal("Cool");
-  //   expect(login.currentUser.lastname).to.equal("Person");
-  //   expect(login.currentUser.token).to.equal("abc123");
+  //   Ifl.login.setCurrentUser(responseData);
+  //   expect(Ifl.login.currentUser.firstname).to.equal("Cool");
+  //   expect(Ifl.login.currentUser.lastname).to.equal("Person");
+  //   expect(Ifl.login.currentUser.token).to.equal("abc123");
   // });
 
   // it("registers the submit click event", function() {
   //   var request;
-  //   login.cacheElements();
-  //   login.registerEvents();
-  //   login.$submit.trigger("click");
+  //   Ifl.login.cacheElements();
+  //   Ifl.login.registerEvents();
+  //   Ifl.login.$submit.trigger("click");
   //   request = _.first(requests);
   //   expect(request.method).to.equal("POST");
   //   expect(request.url).to.equal("https://iflauthexample-webapp.herokuapp.com");
   //   expect(request.requestHeaders.Accept).to.match(/application\/json/);
   // });
 
-  // it("sets the current user on loginSuccess", function() {
+  // it("sets the current user on Ifl.loginSuccess", function() {
   //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
   //   successCallback = "success";
-  //   login.loginSuccess(responseData, successCallback);
-  //   expect(login.currentUser).to.equal(responseData);
+  //   Ifl.login.Ifl.loginSuccess(responseData, successCallback);
+  //   expect(Ifl.login.currentUser).to.equal(responseData);
   // });
 
-  // it("it does not set the current user on login failure", function() {
-  //   login.loginFailure();
-  //   expect(login.currentUser).to.be.nil
+  // it("it does not set the current user on Ifl.login failure", function() {
+  //   Ifl.login.Ifl.loginFailure();
+  //   expect(Ifl.login.currentUser).to.be.nil
   // });
 });
