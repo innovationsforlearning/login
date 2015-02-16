@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Login</title>
+  </head>
+    <body>
+      <div id="loginContainer">
+        <p>email:</p>
+        <input type="text" name="email" id="email-field">
+        <p>password:</p>
+        <input type="password" name="password" id="password-field">
+        <br />
+        <input type="button" value="Submit" id="submit">
+      </div>
+      <div id="gameContainer"></div>
+
+      <script type="text/javascript" src="js/vendor/jquery-2.1.3.min.js"></script>
+      <script type="text/javascript" src="js/vendor/cordova.js"></script>
+      <script type="text/javascript" src="js/login.js"></script>
+      <script>
+        document.addEventListener('deviceready', function() {
+          // Ifl.login.addLoginModule(game.start);
+          Ifl.login.setProductionUrl();
+          // if (addLoginModule()) { // pass in prod or development or detect
+            // loadGame(); // this would point to another file with code below
+            // $('#gameContainer').show();
+            // var game = new Phaser.Game(540, 960, Phaser.AUTO, 'gameContainer');
+            // game.state.add('Boot', BunnyDefender.Boot);
+            // game.state.add('Preloader', BunnyDefender.Preloader);
+            // game.state.add('StartMenu', BunnyDefender.StartMenu);
+            // game.state.add('Game', BunnyDefender.Game);
+            // game.state.start('Boot');
+
+        }, false);
+      </script>
+    </body>
+</html>
