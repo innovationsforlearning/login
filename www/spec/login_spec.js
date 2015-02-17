@@ -56,43 +56,62 @@ describe('Ifl.login', function() {
     });
   });
 
-  describe("events", function() {
-    beforeEach(function() {
-      appendFixture("div", { id: "loginContainer"});
-      appendFixture("input", { id: "email-field", type: "text", name: "email"});
-      appendFixture("input", { id: "password-field", type: "password", name: "password"});
+  describe("registerEvents", function() {
+    it("registers the submit click event", function() {
       appendFixture("input", { id: "submit", type: "button"});
-      appendFixture("div", { id: "gameContainer"});
       Ifl.login.cacheElements();
       sinon.stub(Ifl.login, "loginUser");
       Ifl.login.registerEvents();
-    });
-
-    it("registers the submit click event", function() {
       Ifl.login.$submit.trigger("click");
       expect(Ifl.login.loginUser).to.have.been.called
     });
+  });
 
-    // it("sets the current user on loginSuccess", function() {
-    //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
-    //   successCallback = "success";
-    //   Ifl.login.Ifl.loginSuccess(responseData, successCallback);
-    //   expect(Ifl.login.currentUser).to.equal(responseData);
+  describe("LoginUser", function() {
+    // var xhr;
+    // var requests;
+    // var request;
+
+    // beforeEach(function() {
+    //   xhr = sinon.useFakeXMLHttpRequest();
+    //   requests = [];
+    //   xhr.onCreate = function(xhr) {
+    //     requests.push(xhr);
+    //   };
+    //   appendFixture("input", { id: "submit", type: "button"});
+    //   var callback = function() {
+    //      console.log("Success");
+    //   }
+    //   Ifl.login.addLoginModule(callback);
+    //   var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
     // });
 
-    // it("wires up the call to the api with proper credentials", function() {
+    // it("calls to the api with proper credentials", function() {
     //   Ifl.login.$email.val("dev@ifl.org");
     //   Ifl.login.$password.val("1234");
-    //   Ifl.login.$submit.trigger("click");
+    //   Ifl.login.loginUser();
     //   request = _.first(requests);
     //   expect(request.method).to.equal("POST");
-    //   expect(request.url).to.equal("http://localhost:3000/users/sign_in.json");
+    //   expect(request.url).to.equal("https://iflauthexample-webapp.herokuapp.com/users/sign_in.json");
     //   expect(request.requestHeaders.Accept).to.match(/application\/json/);
     // });
 
-    // it("it does not set the current user on login failure", function() {
-    //   Ifl.login.Ifl.loginFailure();
-    //   expect(Ifl.login.currentUser).to.be.nil
-    // });
+    it("sets the current user on loginSuccess", function() {
+      var callback = function() {
+        console.log("Success");
+      }
+      Ifl.login.addLoginModule(callback);
+      var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
+      Ifl.login.loginSuccess(responseData);
+      expect(Ifl.login.currentUser).to.equal(responseData);
+      expect(Ifl.login.currentUser.firstname).to.equal("Cool");
+      expect(Ifl.login.currentUser.lastname).to.equal("Person");
+      expect(Ifl.login.currentUser.token).to.equal("abc123");
+    });
+
+    it("it does not set the current user on login failure", function() {
+      Ifl.login.loginUser();
+      expect(Ifl.login.currentUser).to.be.nil
+    });
   });
 });

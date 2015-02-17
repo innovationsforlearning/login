@@ -1,14 +1,14 @@
 var Ifl = Ifl || {};
 Ifl.login = {
 
-  // addLoginModule: function(callback) {
-  //   this.successCallback = callback;
-  //   setProductionUrl(); // combine into set urls?  add detection into script. How to get Env?
-  //   setDevelopmentUrl();
-  //   cacheElements();
-  //   this.$gameContainer.hide();
-  //   registerEvents();
-  // },
+  addLoginModule: function(callback) {
+    this.successCallback = callback;
+    this.setProductionUrl(); // combine into set urls?  add detection into script. How to get Env?
+    this.setDevelopmentUrl();
+    this.cacheElements();
+    this.$gameContainer.hide();
+    this.registerEvents();
+  },
 
   setProductionUrl: function() {
     this.productionApiUrl = 'https://iflauthexample-webapp.herokuapp.com';
@@ -35,32 +35,32 @@ Ifl.login = {
   },
 
   loginUser: function(event) {
-    // $email = $email.val();
-    // $password = $password.val();
-    // $.ajax({
-    //   type: 'POST',
-    //   // url: productionApiUrl + '/users/sign_in.json',  // need url switching
-    //   url: 'http://localhost:3000/users/sign_in.json',
-    //   crossDomain: true,
-    //   data: {
-    //     user: {
-    //         email: $email,
-    //         password: $password
-    //     },
-    //   },
-    //   dataType: 'json',
-    // })
-    // .done(this.loginSuccess(responseData, this.successCallback))
-    // .fail(this.loginFailure);
+    var request = $.ajax({
+      type: 'POST',
+      // url: this.productionApiUrl + '/users/sign_in.json',  // need url switching
+      url: 'https://iflauthexample-webapp.herokuapp.com/users/sign_in.json',
+      // url: 'http://localhost:3000/users/sign_in.json',
+      crossDomain: true,
+      data: {
+        user: {
+          email: $("#email-field").val(),
+          password: $("#password-field").val()
+        },
+      },
+      dataType: 'json',
+    })
+    request.done(this.loginSuccess);
+    request.fail(this.loginFailure);
   },
 
-  // loginSuccess: function(responseData, successCallback) {
-  //   this.setCurrentUser(responseData);
-  //   this.$loginContainer.hide();
-  //   successCallback();
-  // },
+  loginSuccess: function(responseData) {
+    this.setCurrentUser(responseData);
+    this.$loginContainer.hide();
+    this.$gameContainer.show();
+    this.successCallback();
+  },
 
-  // loginFailure: function() {
-  //   alert("There was a problem, please try again.");
-  // }
+  loginFailure: function() {
+    alert("There was a problem, please try again.");
+  }
 }
