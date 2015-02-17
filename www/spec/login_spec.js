@@ -1,5 +1,4 @@
 describe('Ifl.login', function() {
-
   describe("setting urls", function() {
     it("sets a production url", function() {
       Ifl.login.setProductionUrl();
@@ -12,10 +11,17 @@ describe('Ifl.login', function() {
     });
   });
 
+  it("sets the current user", function() {
+    var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
+    Ifl.login.setCurrentUser(responseData);
+    expect(Ifl.login.currentUser.firstname).to.equal("Cool");
+    expect(Ifl.login.currentUser.lastname).to.equal("Person");
+    expect(Ifl.login.currentUser.token).to.equal("abc123");
+  });
+
   describe("cacheElements", function() {
 
     beforeEach(function() {
-      // appendFixture("input", { id: "autocomplete", type: "text", name: "autocomplete" });
       appendFixture("div", { id: "loginContainer"});
       appendFixture("input", { id: "email-field", type: "text", name: "email"});
       appendFixture("input", { id: "password-field", type: "password", name: "password"});
@@ -50,34 +56,43 @@ describe('Ifl.login', function() {
     });
   });
 
-  // it("sets the current user", function() { // how do you fake out the response data?
-  //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
-  //   Ifl.login.setCurrentUser(responseData);
-  //   expect(Ifl.login.currentUser.firstname).to.equal("Cool");
-  //   expect(Ifl.login.currentUser.lastname).to.equal("Person");
-  //   expect(Ifl.login.currentUser.token).to.equal("abc123");
-  // });
+  describe("events", function() {
+    beforeEach(function() {
+      appendFixture("div", { id: "loginContainer"});
+      appendFixture("input", { id: "email-field", type: "text", name: "email"});
+      appendFixture("input", { id: "password-field", type: "password", name: "password"});
+      appendFixture("input", { id: "submit", type: "button"});
+      appendFixture("div", { id: "gameContainer"});
+      Ifl.login.cacheElements();
+      sinon.stub(Ifl.login, "loginUser");
+      Ifl.login.registerEvents();
+    });
 
-  // it("registers the submit click event", function() {
-  //   var request;
-  //   Ifl.login.cacheElements();
-  //   Ifl.login.registerEvents();
-  //   Ifl.login.$submit.trigger("click");
-  //   request = _.first(requests);
-  //   expect(request.method).to.equal("POST");
-  //   expect(request.url).to.equal("https://iflauthexample-webapp.herokuapp.com");
-  //   expect(request.requestHeaders.Accept).to.match(/application\/json/);
-  // });
+    it("registers the submit click event", function() {
+      Ifl.login.$submit.trigger("click");
+      expect(Ifl.login.loginUser).to.have.been.called
+    });
 
-  // it("sets the current user on Ifl.loginSuccess", function() {
-  //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
-  //   successCallback = "success";
-  //   Ifl.login.Ifl.loginSuccess(responseData, successCallback);
-  //   expect(Ifl.login.currentUser).to.equal(responseData);
-  // });
+    // it("sets the current user on loginSuccess", function() {
+    //   responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
+    //   successCallback = "success";
+    //   Ifl.login.Ifl.loginSuccess(responseData, successCallback);
+    //   expect(Ifl.login.currentUser).to.equal(responseData);
+    // });
 
-  // it("it does not set the current user on Ifl.login failure", function() {
-  //   Ifl.login.Ifl.loginFailure();
-  //   expect(Ifl.login.currentUser).to.be.nil
-  // });
+    // it("wires up the call to the api with proper credentials", function() {
+    //   Ifl.login.$email.val("dev@ifl.org");
+    //   Ifl.login.$password.val("1234");
+    //   Ifl.login.$submit.trigger("click");
+    //   request = _.first(requests);
+    //   expect(request.method).to.equal("POST");
+    //   expect(request.url).to.equal("http://localhost:3000/users/sign_in.json");
+    //   expect(request.requestHeaders.Accept).to.match(/application\/json/);
+    // });
+
+    // it("it does not set the current user on login failure", function() {
+    //   Ifl.login.Ifl.loginFailure();
+    //   expect(Ifl.login.currentUser).to.be.nil
+    // });
+  });
 });

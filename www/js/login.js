@@ -26,31 +26,33 @@ Ifl.login = {
     this.$gameContainer = $("#gameContainer");
   },
 
-  // registerEvents: function() {
-  //   this.$submit.on("click", loginUser);
-  // },
+  registerEvents: function() {
+    this.$submit.on("click", this.loginUser);
+  },
 
-  // setCurrentUser: function(responseData) {
-  //   this.currentUser = responseData; //this needs to be global
-  // },
+  setCurrentUser: function(responseData) {
+    this.currentUser = responseData; //this needs to be global
+  },
 
-  // loginUser: function(event) {
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: productionApiUrl + '/users/sign_in.json',  // need url switching
-  //     // url: 'http://localhost:3000/users/sign_in.json',
-  //     crossDomain: true,
-  //     data: {
-  //       user: {
-  //           email: event.$email.val(), //does this need event?
-  //           password: $password.val()
-  //       },
-  //     },
-  //     dataType: 'json',
-  //   })
-  //   .done(this.loginSuccess(responseData, this.successCallback))
-  //   .fail(this.loginFailure);
-  // },
+  loginUser: function(event) {
+    // $email = $email.val();
+    // $password = $password.val();
+    // $.ajax({
+    //   type: 'POST',
+    //   // url: productionApiUrl + '/users/sign_in.json',  // need url switching
+    //   url: 'http://localhost:3000/users/sign_in.json',
+    //   crossDomain: true,
+    //   data: {
+    //     user: {
+    //         email: $email,
+    //         password: $password
+    //     },
+    //   },
+    //   dataType: 'json',
+    // })
+    // .done(this.loginSuccess(responseData, this.successCallback))
+    // .fail(this.loginFailure);
+  },
 
   // loginSuccess: function(responseData, successCallback) {
   //   this.setCurrentUser(responseData);
