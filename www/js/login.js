@@ -39,7 +39,6 @@ Ifl.login = {
     var request = $.ajax({
       type: 'POST',
       url: this.productionApiUrl + '/users/sign_in.json',  // need url switching
-      // url: 'https://iflauthexample-webapp.herokuapp.com/users/sign_in.json',
       // url: 'http://localhost:3000/users/sign_in.json',
       crossDomain: true,
       data: {
@@ -49,15 +48,6 @@ Ifl.login = {
         },
       },
       dataType: 'json'
-      // success: function(responseData) {
-      //   Ifl.login.setCurrentUser(responseData);
-      //   Ifl.login.$loginContainer.hide();
-      //   Ifl.login.$gameContainer.show();
-      //   // Ifl.login.successCallback(); // game.start();
-      // },
-      // error: function() {
-      //   alert("There was a problem, please try again.");
-      // }
     });
     request.done(this.loginSuccess);
     request.fail(this.loginFailure);
