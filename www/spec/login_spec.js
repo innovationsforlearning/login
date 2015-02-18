@@ -1,4 +1,15 @@
 describe('Ifl.login', function() {
+  var xhr;
+  var requests;
+
+  beforeEach(function() {
+    xhr = sinon.useFakeXMLHttpRequest();
+    requests = [];
+    xhr.onCreate = function(xhr) {
+      requests.push(xhr);
+    };
+  });
+
   describe("setting urls", function() {
     it("sets a production url", function() {
       Ifl.login.setProductionUrl();
@@ -14,9 +25,9 @@ describe('Ifl.login', function() {
   it("sets the current user", function() {
     var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
     Ifl.login.setCurrentUser(responseData);
-    expect(Ifl.login.currentUser.firstname).to.equal("Cool");
-    expect(Ifl.login.currentUser.lastname).to.equal("Person");
-    expect(Ifl.login.currentUser.token).to.equal("abc123");
+    expect(Ifl.currentUser.firstname).to.equal("Cool");
+    expect(Ifl.currentUser.lastname).to.equal("Person");
+    expect(Ifl.currentUser.token).to.equal("abc123");
   });
 
   describe("cacheElements", function() {
@@ -57,6 +68,10 @@ describe('Ifl.login', function() {
   });
 
   describe("registerEvents", function() {
+    afterEach(function() {
+      Ifl.login.loginUser.restore();
+    });
+
     it("registers the submit click event", function() {
       appendFixture("input", { id: "submit", type: "button"});
       Ifl.login.cacheElements();
@@ -68,45 +83,35 @@ describe('Ifl.login', function() {
   });
 
   describe("LoginUser", function() {
-    // var xhr;
-    // var requests;
-    // var request;
+    beforeEach(function() {
+      appendFixture("input", { id: "submit", type: "button"});
+      appendFixture("input", { id: "email-field", type: "text", name: "email", value: "dev@ifl.org"});
+      appendFixture("input", { id: "password-field", type: "password", name: "password", value: "1234"});
+      var callback = function() {
+         console.log("Success");
+      }
+      Ifl.login.initialize(callback);
+    });
 
-    // beforeEach(function() {
-    //   xhr = sinon.useFakeXMLHttpRequest();
-    //   requests = [];
-    //   xhr.onCreate = function(xhr) {
-    //     requests.push(xhr);
-    //   };
-    //   appendFixture("input", { id: "submit", type: "button"});
-    //   var callback = function() {
-    //      console.log("Success");
-    //   }
-    //   Ifl.login.addLoginModule(callback);
-    //   var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
-    // });
-
-    // it("calls to the api with proper credentials", function() {
-    //   Ifl.login.$email.val("dev@ifl.org");
-    //   Ifl.login.$password.val("1234");
-    //   Ifl.login.loginUser();
-    //   request = _.first(requests);
-    //   expect(request.method).to.equal("POST");
-    //   expect(request.url).to.equal("https://iflauthexample-webapp.herokuapp.com/users/sign_in.json");
-    //   expect(request.requestHeaders.Accept).to.match(/application\/json/);
-    // });
+    it("calls to the api with proper credentials", function() {
+      Ifl.login.loginUser();
+      var request = _.first(requests);
+      expect(request.method).to.equal("POST");
+      expect(request.url).to.equal("https://iflauthexample-webapp.herokuapp.com/users/sign_in.json");
+      expect(request.requestHeaders.Accept).to.match(/application\/json/);
+    });
 
     it("sets the current user on loginSuccess", function() {
       var callback = function() {
         console.log("Success");
       }
-      Ifl.login.addLoginModule(callback);
+      Ifl.login.initialize(callback);
       var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
       Ifl.login.loginSuccess(responseData);
-      expect(Ifl.login.currentUser).to.equal(responseData);
-      expect(Ifl.login.currentUser.firstname).to.equal("Cool");
-      expect(Ifl.login.currentUser.lastname).to.equal("Person");
-      expect(Ifl.login.currentUser.token).to.equal("abc123");
+      expect(Ifl.currentUser).to.equal(responseData);
+      expect(Ifl.currentUser.firstname).to.equal("Cool");
+      expect(Ifl.currentUser.lastname).to.equal("Person");
+      expect(Ifl.currentUser.token).to.equal("abc123");
     });
 
     it("it does not set the current user on login failure", function() {

@@ -1,7 +1,8 @@
 var Ifl = Ifl || {};
 Ifl.login = {
 
-  addLoginModule: function(callback) {
+  initialize: function(callback) {
+    _.bindAll(this);
     this.successCallback = callback;
     this.setProductionUrl(); // combine into set urls?  add detection into script. How to get Env?
     this.setDevelopmentUrl();
@@ -31,24 +32,33 @@ Ifl.login = {
   },
 
   setCurrentUser: function(responseData) {
-    this.currentUser = responseData; //this needs to be global
+    Ifl.currentUser = responseData;
   },
 
-  loginUser: function(event) {
+  loginUser: function() {
     var request = $.ajax({
       type: 'POST',
-      // url: this.productionApiUrl + '/users/sign_in.json',  // need url switching
-      url: 'https://iflauthexample-webapp.herokuapp.com/users/sign_in.json',
+      url: this.productionApiUrl + '/users/sign_in.json',  // need url switching
+      // url: 'https://iflauthexample-webapp.herokuapp.com/users/sign_in.json',
       // url: 'http://localhost:3000/users/sign_in.json',
       crossDomain: true,
       data: {
         user: {
-          email: $("#email-field").val(),
-          password: $("#password-field").val()
+          email: this.$email.val(),
+          password: this.$password.val()
         },
       },
-      dataType: 'json',
-    })
+      dataType: 'json'
+      // success: function(responseData) {
+      //   Ifl.login.setCurrentUser(responseData);
+      //   Ifl.login.$loginContainer.hide();
+      //   Ifl.login.$gameContainer.show();
+      //   // Ifl.login.successCallback(); // game.start();
+      // },
+      // error: function() {
+      //   alert("There was a problem, please try again.");
+      // }
+    });
     request.done(this.loginSuccess);
     request.fail(this.loginFailure);
   },
