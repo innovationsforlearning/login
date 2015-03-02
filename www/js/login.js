@@ -63,4 +63,4 @@ Ifl.login = {
   loginFailure: function() {
     alert("There was a problem, please try again.");
   }
-}
+};
