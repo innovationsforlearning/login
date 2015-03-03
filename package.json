@@ -1,0 +1,33 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.2"
+  },
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "chai-jquery": "^2.0.0",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-mocha": "^0.1.10",
+    "karma-mocha-debug": "^0.1.2",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.1.0",
+    "sinon": "^1.12.2"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/innovationsforlearning/login.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innovationsforlearning/login/issues"
+  },
+  "homepage": "https://github.com/innovationsforlearning/login"
+}
