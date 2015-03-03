@@ -78,7 +78,7 @@ describe('Ifl.login', function() {
       sinon.stub(Ifl.login, "loginUser");
       Ifl.login.registerEvents();
       Ifl.login.$submit.trigger("click");
-      expect(Ifl.login.loginUser).to.have.been.called
+      expect(Ifl.login.loginUser).to.have.been.called;
     });
   });
 
@@ -89,7 +89,7 @@ describe('Ifl.login', function() {
       appendFixture("input", { id: "password-field", type: "password", name: "password", value: "1234"});
       var callback = function() {
          console.log("Success");
-      }
+      };
       Ifl.login.initialize(callback);
     });
 
@@ -104,7 +104,7 @@ describe('Ifl.login', function() {
     it("sets the current user on loginSuccess", function() {
       var callback = function() {
         console.log("Success");
-      }
+      };
       Ifl.login.initialize(callback);
       var responseData = { firstname:"Cool", lastname: "Person", token: "abc123"};
       Ifl.login.loginSuccess(responseData);
@@ -116,7 +116,7 @@ describe('Ifl.login', function() {
 
     it("it does not set the current user on login failure", function() {
       Ifl.login.loginUser();
-      expect(Ifl.login.currentUser).to.be.nil
+      expect(Ifl.login.currentUser).to.be.nil;
     });
   });
 });
