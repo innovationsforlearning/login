@@ -1,14 +1,15 @@
-var dest = './www';
-var src = './src';
+var dest  = './www';
+var src   = './src';
+var test  = './spec';
 
 var autoprefixer  = require('gulp-autoprefixer');
 var browserSync   = require('browser-sync');
 var changed       = require('gulp-changed');
 var concat        = require('gulp-concat');
-var gulp = require('gulp');
+var gulp          = require('gulp');
 var imagemin      = require('gulp-imagemin');
-var jshint = require('gulp-jshint');
-var karma = require('karma');
+var jshint        = require('gulp-jshint');
+var karma         = require('karma');
 var minifycss     = require('gulp-minify-css');
 var rename        = require('gulp-rename');
 var sass          = require('gulp-sass');
@@ -29,9 +30,18 @@ gulp.task('karma', function() {
   });
 });
 
-gulp.task('browser-sync', function () {
+gulp.task('serve', function () {
   browserSync({
-    proxy: "localhost:4000/www/"
+    // proxy: "localhost:4000/www/"
+    server: {
+      baseDir: dest
+    },
+    port: 3333,
+    files: [
+      src + '/scss/**/*.scss',
+      src + '/javascript/**/*.js',
+      src + '/html/**'
+    ]
   });
 });
 
@@ -76,11 +86,11 @@ gulp.task('scripts', function () {
     .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('watch', ['browser-sync'], function() {
-  gulp.watch(src + '/scss/**/*.scss', ['styles']);
+gulp.task('watch', ['serve'], function() {
+  gulp.watch(src + '/scss/**', ['styles']);
   gulp.watch(src + '/images/*', ['images']);
   gulp.watch(src + '/javascript/**/*.js', ['scripts']);
-  gulp.watch(['src/javascript/*.js', 'spec/*_spec.js'], ['lint']);
+  gulp.watch([src + '/javascript/**/*.js', test + '/*_spec.js'], ['lint']);
   gulp.watch(src + '/html/**', ['markup']);
 });
 

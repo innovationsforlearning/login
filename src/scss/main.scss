@@ -14,7 +14,7 @@ body {
   background-image: linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
   background-image: -webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
   background-image: -ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A7A7A7), color-stop(0.51, blue));
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A7A7A7), color-stop(0.51, lightpink));
   background-attachment: fixed;
   font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
   font-size: 12px;
@@ -89,7 +89,26 @@ h1 {
   -webkit-animation: fade 3000ms infinite;
 }
 
-.logincontainer {
+.container-login {
     width: 400px;
     margin: 0 auto;
+    p {
+      font-size: 24px;
+    }
+
+    input[type = text],
+    input[type = password] {
+      width: 50%;
+      font-size: 22px;
+    }
+    input[type = button] {
+      margin: 10px 0;
+      border: 0;
+      border-radius: 10px;
+      background-color: lightcoral;
+      font-size: 22px;
+      width: 50%;
+      height: 40px;
+
+    }
 }
