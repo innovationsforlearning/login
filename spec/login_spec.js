@@ -65,6 +65,7 @@ describe('Ifl.login', function() {
       expect(Ifl.login.$gameContainer).to.exist;
       expect(Ifl.login.$gameContainer).to.have.id("gameContainer");
     });
+
   });
 
   describe("registerEvents", function() {
